@@ -32,7 +32,7 @@ class Newton (MultiFunctionOpt):
 
     def step(self, x: arr) -> arr:
         s = -np.matmul(
-            np.linalg.inv(
+            np.linalg.inv(                
                 self.hessian(x)
                 ), 
             self.gradient(x))
@@ -44,6 +44,7 @@ class Newton (MultiFunctionOpt):
     def f(self, xs: arr) -> float:   
         return self._func()(*xs)
 
+    # TODO: Don't recalculate the derivative every time, save it, memory < time in this case
     def gradient(self, xs: arr) -> arr:
         return arr(
             [
@@ -52,6 +53,7 @@ class Newton (MultiFunctionOpt):
             ]
         )
 
+    # TODO: Don't recalculate the derivative every time, save it, memory < time in this case
     def hessian(self, xs: arr) -> np.array:        
         return shessian(self.ex, xs)    
 

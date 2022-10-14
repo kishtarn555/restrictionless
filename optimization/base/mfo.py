@@ -16,7 +16,7 @@ class MultiFunctionOpt(ABC):
         pass
 
     @abstractmethod
-    def step(xs: arr) -> arr:
+    def step(self, xs: arr) -> arr:
         pass
 
     def dimension(self):

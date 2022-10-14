@@ -45,7 +45,7 @@ class ExcA:
             [0, 4000],
             ])
         # Data for three-dimensional scattered points
-        zdata = np.array([get_lambda(e,x.size)(*pt)+5 for pt in points])
+        zdata = np.array([get_lambda(e,x.size)(*pt) for pt in points])
         xdata =  np.array([pt[0] for pt in points])
         ydata = np.array([pt[1] for pt in points])
         self.ax.scatter3D(xdata, ydata, zdata, c=zdata, cmap='Greens_r')

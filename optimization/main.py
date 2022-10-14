@@ -1,8 +1,8 @@
 
 from optimization.utils.lib import *
-from optimization.excercises.two.newton.a import ExcA
+from optimization.excercises.two.gradiant.a import GradiantExcA
 
 if __name__ == "__main__":
-    l = ExcA()
-    l.main()
+    l = GradiantExcA()
+    l.run()
     input("Press a key to end...")
