@@ -16,6 +16,7 @@ class GradiantExcB(Excercise2D):
             0,
             200
         )
+        self.delta=0.05
 
     def fk(self, x1, x2):
         return 4*x1**2-4*x1*x2+3*x2**2+x1

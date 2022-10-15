@@ -11,7 +11,8 @@ class GradiantExcD(GradiantExcerciseClamped):
             arr([1,1,1]),
             arr([-2, -2,-2]),
             arr([2, 2, 2])
-        )
+        )        
+        self.delta=0.1
 
     def fk(self, x1, x2, x3):
         return x1**3+x2**2+x3

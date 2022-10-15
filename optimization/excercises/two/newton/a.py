@@ -21,8 +21,8 @@ class ExcA:
         )
 
     def plotf(self):
-        x = np.linspace(-2, 2, 30)
-        y = np.linspace(-2, 2, 30)
+        x = np.linspace(-5, 5, 30)
+        y = np.linspace(-5, 5, 30)
         X, Y = np.meshgrid(x, y)
         Z = self.fk(X, Y)
         self.ax.plot_wireframe(X, Y, Z, color='gray')        
@@ -31,8 +31,8 @@ class ExcA:
     def main(self)->None:
         e=parse_expr("100*(x2-x1**2)**2+(1-x1)**2")
         print(e)
-        ntw =  Newton(np.array([2.0,-2.0]), 1e-9, 1e-9,0.05, e)
-        points =[]
+        ntw =  Newton(np.array([2.0,-2.0]), 1e-9, 1e-9,0.5, e)
+        points =[ntw.x_i]
         x= ntw.run( lambda x: points.append(np.copy(x)))
         print (f"Finished on {len(points)} steps:")
         print(f"x={x}")
@@ -40,9 +40,9 @@ class ExcA:
         self.fig = plt.figure()
         self.ax = plt.axes(projection='3d')    
         self.scale([
-            [-2,2],
-            [-2,2],
-            [0, 4000],
+            [-5,5],
+            [-5,5],
+            [0, 40000],
             ])
         # Data for three-dimensional scattered points
         zdata = np.array([get_lambda(e,x.size)(*pt) for pt in points])

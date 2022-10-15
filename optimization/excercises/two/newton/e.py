@@ -17,7 +17,7 @@ class ExcE:
             Xn(2)**4-16*Xn(2)**2+5*Xn(2)
         )
         print(e)
-        ntw =  Newton(np.array([1.0,-1.0,1.0]), 1e-9, 1e-9,0.05, e)
+        ntw =  Newton(np.array([1.0,-1.0,1.0]), 1e-9, 1e-9,0.2, e)
         points =[]
         x= ntw.run( lambda x: points.append(np.copy(x)))
         print (f"Finished on {len(points)} steps:")

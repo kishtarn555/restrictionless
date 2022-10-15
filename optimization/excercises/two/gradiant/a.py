@@ -16,6 +16,7 @@ class GradiantExcA(Excercise2D):
             0,
             40000
         )
+        self.delta =5e-5
 
     def fk(self, x1, x2):
         return 100*(x2-x1**2)**2+(1-x1)**2

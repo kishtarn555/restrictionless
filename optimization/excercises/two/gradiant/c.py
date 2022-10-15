@@ -16,6 +16,7 @@ class GradiantExcC(Excercise2D):
             0,
             10
         )
-
+        self.delta=0.05
+        
     def fk(self, x1, x2):
         return 0.1*(12+x1**2+(1+x1**2)/(x1**2)+(100+x1**2*x2**2)/(x1*x2)**4)

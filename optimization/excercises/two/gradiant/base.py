@@ -14,14 +14,13 @@ class GradiantExcercise(ABC):
     x_i: arr
 
     def run(self) -> List[arr]:
-        a=0.1
         e1=1e-9
         e2=1e-9
         print(f"Punto inical: {self.x_i}")
-        print(f"Razon de aprendizaje: {a}")
+        print(f"Razon de aprendizaje: {self.delta}")
         print(f"Precision para dif. de pasos: {e1}")
         print(f"Precision en la pendiente: {e2}")
-        gr = GradientDescent(self.x_i, self.expr, a, 1000, e1, e2)
+        gr = GradientDescent(self.x_i, self.expr, self.delta, 1000, e1, e2)
         points = []
         x=gr.run(lambda x: points.append(x))
         print(f"Termino en {len(points)} pasos")
