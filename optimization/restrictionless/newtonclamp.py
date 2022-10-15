@@ -5,8 +5,8 @@ from optimization.restrictionless.newton import Newton
 
 @dataclass
 class NewtonClamped(Newton):
-    minima: arr
-    maxima: arr
+    minima: np.ndarray
+    maxima: np.ndarray
     def min(self,a,b):
         if (a<b):
             return a
@@ -15,7 +15,7 @@ class NewtonClamped(Newton):
         if (a>b):
             return a
         return b
-    def step(self, x: arr) -> arr:
+    def step(self, x: np.ndarray) -> np.ndarray:
         tmp=super().step(x)
         return arr( 
             [

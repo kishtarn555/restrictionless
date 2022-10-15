@@ -1,4 +1,3 @@
-import imp
 from sympy import Symbol
 from sympy.core.expr import Expr
 from sympy.core.function import FunctionClass

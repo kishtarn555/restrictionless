@@ -14,7 +14,7 @@ class GradientDescent(MultiFunctionOpt):
     iterations: int
     e1: float
     e2: float
-    def run(self, onStep: Callable[[arr], None]) -> arr:
+    def run(self, onStep: Callable[[np.ndarray], None]) -> np.ndarray:
         print(self.ex)
 
         x = np.copy(self.x_i)
@@ -32,11 +32,11 @@ class GradientDescent(MultiFunctionOpt):
             onStep(x)
         return x
 
-    def step(self, xs: arr) -> arr:
+    def step(self, xs: np.ndarray) -> np.ndarray:
         return np.add(xs, -self.delta*self.gradient(xs))
 
-    def gradient(self, xs: arr) -> arr:
+    def gradient(self, xs: np.ndarray) -> np.ndarray:
         return arr([get_lambda( self.pdif[i], xs.size)(*xs) for i in range(xs.size) ])
 
-    def f(self, xs:arr) -> float:
+    def f(self, xs:np.ndarray) -> float:
         return get_lambda(self.ex, self.dimension())(*xs)

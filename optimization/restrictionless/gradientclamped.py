@@ -19,10 +19,10 @@ def _max(a, b):
 
 @dataclass
 class GradientDescentClamped(GradientDescent):
-    minimum: arr
-    maximum: arr
+    minimum: np.ndarray
+    maximum: np.ndarray
     
-    def step(self, xs: arr) -> arr:
+    def step(self, xs: np.ndarray) -> np.ndarray:
         xn = np.add(xs, -self.delta*self.gradient(xs)) # unclamped
         return arr(
             [

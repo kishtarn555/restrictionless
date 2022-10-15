@@ -16,7 +16,7 @@ class Newton (MultiFunctionOpt):
     delta: float
     ex: Expr
     
-    def run(self, onStep:Callable[[arr], None]) -> arr:
+    def run(self, onStep:Callable[[np.ndarray], None]) -> np.ndarray:
         d1= self.ep1+10
         d2= self.ep2+10
         x = np.copy(self.x_i)
@@ -30,7 +30,7 @@ class Newton (MultiFunctionOpt):
         return x
 
 
-    def step(self, x: arr) -> arr:
+    def step(self, x: np.ndarray) -> np.ndarray:
         s = -np.matmul(
             np.linalg.inv(                
                 self.hessian(x)
@@ -41,11 +41,11 @@ class Newton (MultiFunctionOpt):
     def _func(self) -> SFunction:
         return get_lambda(self.ex, self.x_i.size)
 
-    def f(self, xs: arr) -> float:   
+    def f(self, xs: np.ndarray) -> float:   
         return self._func()(*xs)
 
     # TODO: Don't recalculate the derivative every time, save it, memory < time in this case
-    def gradient(self, xs: arr) -> arr:
+    def gradient(self, xs: np.ndarray) -> np.ndarray:
         return arr(
             [
                 get_lambda(sp.diff( self.ex, Xn(i)),xs.size)(*xs) 
@@ -54,7 +54,7 @@ class Newton (MultiFunctionOpt):
         )
 
     # TODO: Don't recalculate the derivative every time, save it, memory < time in this case
-    def hessian(self, xs: arr) -> np.array:        
+    def hessian(self, xs: np.ndarray) -> np.ndarray:        
         return shessian(self.ex, xs)    
 
     
