@@ -19,9 +19,10 @@ class Excercise2D (GradiantExcercise):
 
     def scale(self,dimensions: List[List[int]]):    
         self.ax.set_aspect('equal') 
-        self.ax.set_xlim(np.array(dimensions[0]))
-        self.ax.set_ylim(np.array(dimensions[1]))
-        self.ax.set_zlim(np.array(dimensions[2]))
+        
+        self.ax.set_xlim(np.array(dimensions[0])) # type: ignore magic
+        self.ax.set_ylim(np.array(dimensions[1])) # type: ignore magic
+        self.ax.set_zlim(np.array(dimensions[2])) # type: ignore magic
     
     @abstractmethod
     def fk(self,x,y):

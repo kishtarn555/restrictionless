@@ -11,16 +11,16 @@ from optimization.restrictionless.gradientclamped import GradientDescentClamped
 @dataclass
 class GradiantExcercise(ABC):
     expr: Expr
-    x_i: arr
+    x_i: np.ndarray
 
-    def run(self) -> List[arr]:
+    def run(self) -> List[np.ndarray]:
         e1=1e-9
         e2=1e-9
         print(f"Punto inical: {self.x_i}")
-        print(f"Razon de aprendizaje: {self.delta}")
+        print(f"Razon de aprendizaje: {self.delta}")  # type: ignore # self.detla is created dynamically bc I was lazy
         print(f"Precision para dif. de pasos: {e1}")
         print(f"Precision en la pendiente: {e2}")
-        gr = GradientDescent(self.x_i, self.expr, self.delta, 1000, e1, e2)
+        gr = GradientDescent(self.x_i, self.expr, self.delta, 1000, e1, e2) # type: ignore 
         points = []
         x=gr.run(lambda x: points.append(x))
         print(f"Termino en {len(points)} pasos")
@@ -31,11 +31,11 @@ class GradiantExcercise(ABC):
 @dataclass
 class GradiantExcerciseClamped(ABC):
     expr: Expr
-    x_i: arr
-    minimum: arr
-    maximum: arr
+    x_i: np.ndarray
+    minimum: np.ndarray
+    maximum: np.ndarray
 
-    def run(self) -> List[arr]:
+    def run(self) -> List[np.ndarray]:
         a=0.1
         e1=1e-9
         e2=1e-9

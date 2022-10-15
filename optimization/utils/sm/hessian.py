@@ -1,7 +1,7 @@
 
 from optimization.utils.sm.vectorfunc import get_lambda, Xn
 from optimization.utils.lib import *
-def hessian(f: Expr, xs:arr) -> arr:
+def hessian(f: Expr, xs:np.ndarray) -> np.ndarray:
     d = xs.size
     return arr(
         [
