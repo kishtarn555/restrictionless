@@ -1,12 +1,22 @@
 
-from optimization.utils.lib import *
-from optimization.excercises.two.gradiant.a import GradiantExcA
-from optimization.excercises.two.gradiant.b import GradiantExcB
-from optimization.excercises.two.gradiant.c import GradiantExcC
-from optimization.excercises.two.gradiant.d import GradiantExcD
-from optimization.excercises.two.newton.e import ExcE
+import math as m
+import numpy.ma as n
 
 
+def F(x, mu, s):
+    return 0.5*(1+m.erf((x-mu)/(s*m.sqrt(2))  ))
 if __name__ == "__main__":
-    print(type(np.array([[3.0,2.0],[1.0,2.0]])))
+    mu = 5644
+    s = 1615
+    a,b=4000,20000
+    while (b-a > 1e-9):
+        h=(a+b)/2
+        if (1-F(h, mu, s) > 0.05):
+            a=h
+        else:
+            b=h
+    print(a)
+    print(F(a,mu,s))
+    
+    
     input("Press a key to end...")

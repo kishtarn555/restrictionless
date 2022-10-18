@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from optimization.base.lfo import StepAlgorithm
 
 @dataclass
-class Biseccion(StepAlgorithm):
+class Bisection(StepAlgorithm):
     df: Callable[[float], float]
     x_a: float
     x_b: float
@@ -26,5 +26,9 @@ class Biseccion(StepAlgorithm):
                 a=m
             onStep(m)
         return (a+b)/2
+
+
+    def step(self, x: float) -> float:
+        return x
 
 
