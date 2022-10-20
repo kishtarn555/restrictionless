@@ -18,25 +18,13 @@ class Secant(StepAlgorithm):
         b:float=self.x_b
         steps:int=0
         m= 0
-        while (steps < self.max_steps):
-            steps += 1
-            m=(a+b)/2
-            onStep(m)
-            if (self.df(a)*self.df(m) < 0):
-                b=m
-                break
-            else:
-                a=m
-
         while (steps< self.max_steps):
             steps+=1            
-            m = b-self.df(b)/((self.df(b)-self.df(a))/(b-a))
-            onStep(m)
-            if (self.df(m) < 0):
-                b=m
-            else:                
-                a=m
-            if (np.abs(self.df(m))<self.tolerance):
+            m = a-self.df(a)*(b-a)/((self.df(b)-self.df(a)))
+            a=b
+            b=m
+            onStep(b)
+            if (np.abs(a-b)<self.tolerance):
                 return m
         return  m
 

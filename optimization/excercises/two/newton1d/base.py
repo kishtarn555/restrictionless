@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from optimization.utils.lib import *
+from optimization.utils.plot import get_colors
 from typing import List, TypeVar, Any
 
 from optimization.restrictionless.d1.newton import Netwon1D
@@ -14,28 +15,30 @@ T = TypeVar("T", float, Expr, np.ndarray)
 class Excercise(ABC):
     x_a:float
     x_b:float
+    x_i: float
     max_steps:int
     tolerance:float
     def run(self):
-        points: List[float] = [self.x_a+(self.x_b-self.x_a)/10*9]
+        points: List[float] = [self.x_i]
         b = Netwon1D(
             self.df,
             self.df2,  
-            self.x_a+(self.x_b-self.x_a)/10*9, 
+            self.x_i, 
             self.max_steps, 
             self.tolerance)
-        print(f"{0}: {b.x_i}")
+        print(f"x_{0} = {b.x_i}")
         res=b.run(lambda x: self.on_step(points,x))
         print(f"Termino en {len(points)-1} pasos")
         print(f"   x={res}")
         print(f"f(x)={self.f(res)}")
         self.plot(points)
+        return res
 
     def on_step(self, points:List[float], x:float):
-        if (len(points)< 5):
-            print(f"{len(points)}: {x}")
+        if (len(points)< 10):
+            print(f"x_{len(points)} = {x}")
         elif (len(points)%10==0):
-            print(f"{len(points)}: {x}")
+            print(f"x_{len(points)} = {x}")
         points.append(x)
 
     def plot(self, points:List[float])->None:
@@ -55,6 +58,7 @@ class Excercise(ABC):
         Y = self.f(X)
         fig = plt.figure()
         ax = fig.add_subplot(1,1,1)
+        ax.set_title(self.__class__.__name__)
         ax.set_xlim(self.x_a, self.x_b)
         ax.set_ylim(mini, maxi)
 
@@ -63,8 +67,7 @@ class Excercise(ABC):
         ax.scatter(
             [p for p in points],
             [self.f(p) for p in points],
-            c=[i+1 for i in range(len(points))],            
-            norm="log",
+            c=get_colors(len(points))            
         )        
         fig.show()
 
