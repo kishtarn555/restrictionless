@@ -1,7 +1,7 @@
 from typing import List, Tuple
 
 from optimization.utils.lib import *
-from optimization.meta.hw.backpack import Knapsack, Item, validateSolution, rawWeight, rawScore, RunStats
+from optimization.examen.knapsack import Knapsack, Item, validateSolution, rawWeight, rawScore, RunStats
 
 names = [
     "ks_4_0",       
@@ -56,7 +56,7 @@ def readCase(path: str) -> Tuple[int, int, List[Item]]:
     N, W = map((int), f.readline().split())
     items: List[Item] = []
     for i in range(N):
-        p, w = map(float, f.readline().split())
+        p, w = map(int, f.readline().split())
         items.append(Item(w,p))
     return N, W, items
 
@@ -65,12 +65,7 @@ def readCase(path: str) -> Tuple[int, int, List[Item]]:
 def runCase(name:str, runStats:RunStats, runs:int=1) -> Tuple[float, List[Item]]:
     N, W, items = readCase(f"extern/hw/knap/{name}")
     solver = Knapsack(
-        INITIAL_THRESHOLD=runStats.INITIAL_THRESHOLD,
-        T=runStats.T,
-        A=runStats.A,
-        EPS = runStats.EPS,
-        LR=runStats.LR,
-        UR=runStats.UR
+        TABU_CAPACITY=3
     )
     avgSum =0
     myScore = -1
@@ -90,7 +85,7 @@ def runCase(name:str, runStats:RunStats, runs:int=1) -> Tuple[float, List[Item]]
 
     print(f"For {name} got best score: {myScore}/{optimumDP[name]}= {myScore/optimumDP[name]*100.0}")
     print(f"Using items: {[i+1 for i,p in enumerate(solution) if p==1 ]}")
-    print(f"Got avarage score of {avg}/{optimumDP[name]} = {avg/optimumDP[name]*100.0}")    
+    print(f"Got average score of {avg}/{optimumDP[name]} = {avg/optimumDP[name]*100.0}")    
     print(f"All scores: {scores}")
     print("--------------------------------------")
     out = open(f"extern/hw/knap/out/{name}.out", "w")
@@ -124,10 +119,11 @@ def main():
     )
     
     for name in names:
+        print(f"Running case {name}")
         runCase(
             name,
             default,
-            10        
+            1        
         )
 
 if __name__=="__main__":
