@@ -66,7 +66,7 @@ class Knapsack:
 
 
     def runKnapsack(self, w:float, items: List[Item]) -> Tuple[List[int],List[Tuple[int, int, int]]]:
-
+        # Paso 0, iniciamos con una solucion vacia, con el vector 0
         steps = []
         current_solution = [0] * len(items)
         best_solution = [0] * len(items)
@@ -141,7 +141,7 @@ class Knapsack:
         print(
             (
                 f"> Best Solution got a score of {best.score} " 
-                f"with weight {best.weight}, fitness function {best.fitness}"
+                f"with weight {best.weight}, using |T| = {self.TABU_CAPACITY}"
                 )
         )   
              
