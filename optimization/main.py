@@ -71,8 +71,10 @@ def runCase(name:str, runStats:RunStats, runs:int=1) -> Tuple[float, List[Item]]
     myScore = -1
     solution:List[int] =[]
     scores = []
+    steps = []
     for i in range(runs):
-        cur = solver.runKnapsack(W, items)
+        cur, msteps = solver.runKnapsack(W, items)
+        steps=msteps.copy()
         curScore = validateSolution(W, items, cur)
         avgSum +=curScore
         scores.append(curScore)
@@ -94,6 +96,11 @@ def runCase(name:str, runStats:RunStats, runs:int=1) -> Tuple[float, List[Item]]
     out.write('\n')    
     out.write(f"{rawWeight(items, solution)}\n")
     out.write(f"{rawScore(items, solution)}\n")
+
+    csv = open(f"extern/hw/knap/csv/{name}.csv", "w")
+    csv.write("i,s_i,w_i\n")
+    for it in steps:
+        csv.write(f"{it[0]},{it[1]},{it[2]}\n")
         
     return (
         myScore,

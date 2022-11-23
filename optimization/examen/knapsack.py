@@ -6,7 +6,7 @@ from dataclasses import dataclass
 import math
 import random
 
-from typing import NamedTuple, List
+from typing import NamedTuple, List, Tuple
 
 class RunStats(NamedTuple):
     INITIAL_THRESHOLD: float
@@ -57,9 +57,17 @@ class solutionData(NamedTuple):
 class Knapsack:
     TABU_CAPACITY:int
 
-    
+    def shouldPrint(self, index:int, len:int) -> bool:
+        if (index == 0): 
+            return True        
+        if ((index-1)//(len//100) !=(index)//(len//100) ):
+            return True
+        return False
 
-    def runKnapsack(self, w:float, items: List[Item]) -> List[int]:
+
+    def runKnapsack(self, w:float, items: List[Item]) -> Tuple[List[int],List[Tuple[int, int, int]]]:
+
+        steps = []
         current_solution = [0] * len(items)
         best_solution = [0] * len(items)
         best = solutionData(0,0,0)
@@ -70,23 +78,27 @@ class Knapsack:
         tabu_list = set()
         tabu_inorder = deque()
         repetitions = max((int)(1e6/len(items)),10)
+        steps.append((0, 0, 0))
         for i in range(repetitions):
             # Paso 1, encontrar el mejor vecino
             neighbor = solutionData(0,-1e9, 0)
             changed = -1
-
             test = current_solution
+            # Iteramos por todos los vecinos
             for j in range(len(current_solution)):
+                # Si este vecino viola la lista tabu, lo ignoramos
                 if j in tabu_list:
                     continue                
                 prev = test[j]
                 test[j] = 1 - test[j]
+                # Calculamos los valores para este vecino
                 newScore = current.score + (1 if test[j]==1 else -1)*items[j].price
                 newWeight= current.weight + (1 if test[j]==1 else -1)*items[j].weight
                 newFitness = newScore if newWeight <= w else (
                     -1e6 - newWeight*1000
                 )
                 newData = solutionData(newScore,newFitness,newWeight)
+                #Vemos si este vecino es el mejor vecino encontrado
                 if (newData.fitness > neighbor.fitness):
                     neighbor = newData
                     changed = j                
@@ -95,19 +107,31 @@ class Knapsack:
             if changed == -1:
                 print("Fatal error, no best neighbor found")
                 exit()
-            # Paso 2 agregar el cambio a la lista tabu
+            
+
+            # Paso 2 Cambiar la solucion actual por el vecino
+            current = neighbor
+            current_solution[changed] = 1-current_solution[changed]
+            sh = self.shouldPrint(i, repetitions) or i < 20
+            
+            # Paso 3 agregar el cambio a la lista tabu
             tabu_list.add(changed)
             tabu_inorder.append(changed)
             if (len(tabu_list) > self.TABU_CAPACITY):
                 tabu_list.remove(tabu_inorder[0])
                 tabu_inorder.popleft()
-            # Paso 3 Cambiar la solucion actual por el vecino
-            current = neighbor
-            current_solution[changed] = 1-current_solution[changed]
+
             # Paso 4 Comparar la solucion actual con la mejor, y de ser necesario actualizarla
             if (current.fitness > best.fitness):
                 best=current
                 best_solution = current_solution.copy()
+                sh = True
+
+            if (sh):                
+                steps.append((i+1, best.score, current.score))
+        
+        steps.append((repetitions, best.score, current.score))    
+
         print(
             (
                 f"> Best Solution got a score of {best.score} " 
@@ -115,7 +139,7 @@ class Knapsack:
                 )
         )   
              
-        return best_solution
+        return (best_solution,steps)
 
 def runCase(caseName):
     Knapsack(TABU_CAPACITY=3)
