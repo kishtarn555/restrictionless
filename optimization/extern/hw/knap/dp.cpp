@@ -3,7 +3,7 @@
 #include <vector>
 
 using namespace std;
-ofstream output("sols/dp.out");
+ofstream output("sols/dp2.out");
 
 
 long long items[10050][2];
@@ -29,12 +29,13 @@ void solve(string path) {
             best=max(best, memo[w][i&1]);
         }
     }
-    output<<path<< " "<< memo[0][W&1]<<"\n";
+    output<<path<< " "<< memo[0][1-(N&1)]<<"\n";
     cout << best<<endl;
 }
 
 int main () {
-    string cases[] = {"ks_4_0",
+    string cases[] = {
+        "ks_4_0",
         "ks_19_0",
         "ks_30_0",
         "ks_40_0",
@@ -52,7 +53,8 @@ int main () {
         "ks_400_0",
         "ks_500_0",
         "ks_1000_0",
-        "ks_10000_0"};
+        "ks_10000_0"
+    };
     for (string cased: cases)
         solve(cased);
 }

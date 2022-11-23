@@ -76,7 +76,7 @@ class Knapsack:
             ]
             scoreX = validateSolution(w, items, x)
             threshold*=0.99
-            
+        
         while t > self.EPS:
             xt = self.mutate(x, items)
             newScore = validateSolution(w, items, xt)
