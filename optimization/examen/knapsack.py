@@ -95,16 +95,16 @@ class Knapsack:
             if changed == -1:
                 print("Fatal error, no best neighbor found")
                 exit()
-
+            # Paso 2 agregar el cambio a la lista tabu
             tabu_list.add(changed)
             tabu_inorder.append(changed)
             if (len(tabu_list) > self.TABU_CAPACITY):
                 tabu_list.remove(tabu_inorder[0])
                 tabu_inorder.popleft()
-            
+            # Paso 3 Cambiar la solucion actual por el vecino
             current = neighbor
             current_solution[changed] = 1-current_solution[changed]
-
+            # Paso 4 Comparar la solucion actual con la mejor, y de ser necesario actualizarla
             if (current.fitness > best.fitness):
                 best=current
                 best_solution = current_solution.copy()
