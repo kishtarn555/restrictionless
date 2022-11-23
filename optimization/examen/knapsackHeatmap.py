@@ -95,7 +95,7 @@ class Knapsack:
                 newScore = current.score + (1 if test[j]==1 else -1)*items[j].price
                 newWeight= current.weight + (1 if test[j]==1 else -1)*items[j].weight
                 newFitness = newScore if newWeight <= w else (
-                    - newWeight
+                    -1e6 - newWeight*1000
                 )
                 newData = solutionData(newScore,newFitness,newWeight)
                 #Vemos si este vecino es el mejor vecino encontrado
@@ -106,12 +106,6 @@ class Knapsack:
 
             if changed == -1:
                 print("Fatal error, no best neighbor found")
-                print(f"Knapsack {len(tabu_list)}")
-                sum=0
-                for x in current_solution:
-                    sum+=x
-                print(f"With {sum} elements")
-                print(f"With {current.weight} weight")
                 exit()
             
 
