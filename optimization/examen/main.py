@@ -65,7 +65,7 @@ def readCase(path: str) -> Tuple[int, int, List[Item]]:
 def runCase(name:str, runStats:RunStats, runs:int=1) -> Tuple[float, List[Item]]:
     N, W, items = readCase(f"extern/hw/knap/{name}")
     solver = Knapsack(
-        TABU_CAPACITY= (int)(math.log2(N))
+        TABU_CAPACITY= 3
     )
     avgSum =0
     myScore = -1

@@ -13,6 +13,8 @@ using ll = long long;
 struct data{
     ll weight;
     ll cost;
+    pair<ll, ll> expensive,cheapest;
+    pair<ll, ll> heaviest, lightest;
     ll value;
     int index;
     int lazy;
@@ -27,6 +29,20 @@ struct data{
         index=idx;
         lazy =0;
         sum=0;
+        expensive = {c, idx};
+        cheapest = {c, idx};
+        heaviest= {w, idx};
+        lightest = {w, idx};
+    }
+    data (ll infinite) {
+        weight=infinite;
+        cost = -infinite;
+        index=-1;
+        lazy=sum=0;
+        expensive = {-infinite, -1};
+        cheapest = {infinite, -1};
+        heaviest= {-infinite, -1};
+        lightest = {infinite, -1};
     }
     bool operator < (const data & other) const {
         return weight < other.weight;
@@ -36,15 +52,9 @@ using joinFunction = function<data(data,data)>;
 
 data shelveJoin(data  a, data b) {
     data result;
-    if (a.value < 0)
-        result = b;
-    else if (b.value < 0) {
-        result=a;
-    } else if (a.value > b.value) {
-        result=a;
-    } else {
-        result= b;
-    }
+    result.heaviest = max(a.heaviest, b.heaviest);
+    result.expensive = max(a.expensive, b.expensive);
+    result.expensive = max(a.expensive, b.expensive);
     result.sum = a.sum+b.sum;
     return result;
 }
