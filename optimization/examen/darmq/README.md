@@ -164,7 +164,7 @@ backpack = buildSegmentTree([-1,-1,...,-1])
 for (rep in [1, 2, 3, ..., rep])  {
     mejorVecino = None
     offset = W- pesoTotal(solucion)
-    if (offset <= W) {
+    if (offset <= 0) {
         # Estamos debajo del limite de peso
         
         if (shelf.hasItemInRange(0, offset)) {
